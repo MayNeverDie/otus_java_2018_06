@@ -10,18 +10,21 @@ public class Casette {
     private final List<Banknote> banknoteStack;
     private final int maxElements;
     private final int banknoteValue;
+    private final int casetteCapacity = 2500;
     private int count = 0;
 
-    public Casette(int maxElements, int banknoteValue) {
-        this.banknoteValue = banknoteValue;
+    public Casette(int maxElements, Banknote banknote) {
+        this.banknoteValue = banknote.getValue();
         this.maxElements = maxElements;
-        banknoteStack = new ArrayList<>(maxElements);
+
+        banknoteStack = new ArrayList<>(casetteCapacity);
+        Fill(banknote);
         //()->Stream.generate(()-> new Banknote()).limit(quantity).collect(Collectors.toList(banknoteStack));
     }
 
     public void put(Banknote banknote) {
 
-        if (banknoteStack.size() == maxElements) {
+        if (banknoteStack.size() == casetteCapacity) {
             throw new RuntimeException("Casette is full");
         } else {
             banknoteStack.add(banknote);

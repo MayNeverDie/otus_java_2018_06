@@ -1,9 +1,11 @@
 package com.dikanskiy;
 
-public interface ATM {
-    void putCash();
+import com.dikanskiy.banknotes.Banknote;
 
-    void getCash();
+public interface ATM {
+    void putCash(Banknote... banknotes);
+
+    void getCash(long cashQuantity);
 
     void viewBalance();
 }
