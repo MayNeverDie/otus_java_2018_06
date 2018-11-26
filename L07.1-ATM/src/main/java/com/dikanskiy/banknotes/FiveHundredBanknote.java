@@ -7,4 +7,9 @@ public class FiveHundredBanknote extends Banknote {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "FiveHundredBanknote";
+    }
 }

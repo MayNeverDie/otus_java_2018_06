@@ -1,24 +1,25 @@
 package com.dikanskiy;
 
-import com.dikanskiy.banknotes.Banknote;
-import com.dikanskiy.banknotes.FiveHundredBanknote;
-import com.dikanskiy.banknotes.FiveThousandBanknote;
-import com.dikanskiy.banknotes.HundredBanknote;
+import com.dikanskiy.banknotes.*;
 
 import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
 
-        Casette FiveHundredCasette = new Casette(2,new FiveHundredBanknote());
-        Casette FiveThousandCasette = new Casette(2,new FiveThousandBanknote());
+        Banknote TB = new ThousandBanknote();
+        Banknote FTB = new FiveThousandBanknote();
 
-        ATM myAtm = new ATMImlp(FiveHundredCasette,FiveThousandCasette);
+        Casette ThousandCasette = new Casette(TB);
+        Casette FiveThousandCasette = new Casette(FTB);
+
+        ATMHelper.fillCasette(ThousandCasette,TB,5);
+        ATMHelper.fillCasette(FiveThousandCasette,FTB,2);
+
+        ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette);
         myAtm.viewBalance();
 
-        myAtm.putCash(new FiveHundredBanknote(),new FiveThousandBanknote());
+        ATMHelper.printCashValue(myAtm.getCash(15000));
         myAtm.viewBalance();
-
-        myAtm.getCash(10000);
     }
 }

@@ -6,20 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Casette {
+public class Casette implements Comparable<Casette>{
     private final List<Banknote> banknoteStack;
-    private final int maxElements;
+    private List<Banknote> withdrawnBanknotes;
     private final int banknoteValue;
     private final int casetteCapacity = 2500;
     private int count = 0;
 
-    public Casette(int maxElements, Banknote banknote) {
-        this.banknoteValue = banknote.getValue();
-        this.maxElements = maxElements;
+    @Override
+    public String toString() {
+        return "Casette{" +
+                "banknoteValue=" + banknoteValue +
+                ", count=" + count +
+                '}';
+    }
 
+    public Casette(Banknote banknote) {
+        this.banknoteValue = banknote.getValue();
         banknoteStack = new ArrayList<>(casetteCapacity);
-        Fill(banknote);
-        //()->Stream.generate(()-> new Banknote()).limit(quantity).collect(Collectors.toList(banknoteStack));
     }
 
     public void put(Banknote banknote) {
@@ -32,17 +36,17 @@ public class Casette {
         count++;
     }
 
-    public Banknote get() {
-        Banknote withdrawnBanknote = banknoteStack.iterator().next();
-        banknoteStack.remove(withdrawnBanknote);
-        count--;
-        return withdrawnBanknote;
-    }
+    public ArrayList<Banknote> get(int banknoteQuantity) {
+        ArrayList<Banknote> withdrawnBanknotes = new ArrayList<>();
 
-    public void Fill(Banknote banknote) {
-        for (int i = 0; i < maxElements; i++) {
-            put(banknote);
+        for (int i=0;i<banknoteQuantity;) {
+            Banknote withdrawnBanknote = banknoteStack.iterator().next();
+            banknoteStack.remove(withdrawnBanknote);
+            withdrawnBanknotes.add(withdrawnBanknote);
+            count--;
+            i++;
         }
+        return withdrawnBanknotes;
     }
 
     @Override
@@ -64,5 +68,14 @@ public class Casette {
 
     public int getBanknoteValue() {
         return banknoteValue;
+    }
+
+    private int compareSize(int firstSize, int secondSize){
+        return (firstSize<secondSize) ? -1: ((firstSize==secondSize) ? 0:1);
+    }
+
+    @Override
+    public int compareTo(Casette secondCasette) {
+        return compareSize(this.getBanknoteValue(), secondCasette.getBanknoteValue());
     }
 }
