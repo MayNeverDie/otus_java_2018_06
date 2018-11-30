@@ -2,12 +2,12 @@ package com.dikanskiy;
 
 import com.dikanskiy.banknotes.Banknote;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ATMImlp implements ATM {
-    private final List<Casette> casetteList;
+    private List<Casette> casetteList;
+    private Memento memento;
 
     public ATMImlp(Casette... casettes) {
         this.casetteList = new ArrayList<>();
@@ -34,7 +34,7 @@ public class ATMImlp implements ATM {
                 System.out.println("Not enough cash in ATM");
             } else {
                 if (cashQuantity % 100 == 0) {
-                    withdrawnBanknotes =  getCashFromCasette(cashQuantity);
+                    withdrawnBanknotes = getCashFromCasette(cashQuantity);
                 } else {
                     System.out.println("Enter valid cash quantity");
                 }
@@ -45,7 +45,7 @@ public class ATMImlp implements ATM {
         return withdrawnBanknotes;
     }
 
-    private ArrayList getCashFromCasette(long cashQuantity){
+    private ArrayList getCashFromCasette(long cashQuantity) {
         ArrayList withdrawnBanknotes = new ArrayList();
         for (Casette casette : casetteList) {
             int banknoteValue = casette.getBanknoteValue();
@@ -68,16 +68,24 @@ public class ATMImlp implements ATM {
     }
 
 
-
-    private long getBalance(){
+    private long getBalance() {
         long cashBalance = 0;
         for (Casette casette : casetteList) {
             cashBalance += casette.getCount() * casette.getBanknoteValue();
         }
         return cashBalance;
     }
+
     public void viewBalance() {
         System.out.println(getBalance());
+    }
+
+    public void doBackup(){
+        memento = new Memento();
+    }
+
+    public void restore(){
+        casetteList = memento.getMemCasetteList();
     }
 
     @Override
@@ -86,4 +94,22 @@ public class ATMImlp implements ATM {
                 "casetteList=" + casetteList +
                 '}';
     }
+
+    private class Memento {
+        private List memCasetteList;
+
+        public Memento() {
+            memCasetteList = new ArrayList(casetteList.size());
+            Iterator<Casette> iterator = casetteList.iterator();
+            while (iterator.hasNext()){
+                memCasetteList.add(iterator.next().clone());
+            }
+        }
+
+        public List getMemCasetteList() {
+            return memCasetteList;
+        }
+    }
 }
+
+

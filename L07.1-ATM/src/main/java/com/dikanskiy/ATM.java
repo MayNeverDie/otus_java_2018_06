@@ -10,4 +10,8 @@ public interface ATM {
     List getCash(long cashQuantity);
 
     void viewBalance();
+
+    void doBackup();
+
+    void restore();
 }

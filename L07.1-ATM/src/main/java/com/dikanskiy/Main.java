@@ -19,7 +19,12 @@ public class Main {
         ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette);
         myAtm.viewBalance();
 
+        myAtm.doBackup();
+
         ATMHelper.printCashValue(myAtm.getCash(15000));
+        myAtm.viewBalance();
+
+        myAtm.restore();
         myAtm.viewBalance();
     }
 }

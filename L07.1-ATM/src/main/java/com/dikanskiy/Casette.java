@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Casette implements Comparable<Casette>{
+public class Casette implements Comparable<Casette>, Cloneable {
     private final List<Banknote> banknoteStack;
     private List<Banknote> withdrawnBanknotes;
     private final int banknoteValue;
@@ -39,7 +39,7 @@ public class Casette implements Comparable<Casette>{
     public ArrayList<Banknote> get(int banknoteQuantity) {
         ArrayList<Banknote> withdrawnBanknotes = new ArrayList<>();
 
-        for (int i=0;i<banknoteQuantity;) {
+        for (int i = 0; i < banknoteQuantity; ) {
             Banknote withdrawnBanknote = banknoteStack.iterator().next();
             banknoteStack.remove(withdrawnBanknote);
             withdrawnBanknotes.add(withdrawnBanknote);
@@ -70,12 +70,23 @@ public class Casette implements Comparable<Casette>{
         return banknoteValue;
     }
 
-    private int compareSize(int firstSize, int secondSize){
-        return (firstSize<secondSize) ? -1: ((firstSize==secondSize) ? 0:1);
+    private int compareSize(int firstSize, int secondSize) {
+        return (firstSize < secondSize) ? -1 : ((firstSize == secondSize) ? 0 : 1);
     }
 
     @Override
     public int compareTo(Casette secondCasette) {
         return compareSize(this.getBanknoteValue(), secondCasette.getBanknoteValue());
+    }
+
+    @Override
+    protected Casette clone(){
+      Casette clone = null;
+        try {
+            clone = (Casette) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
     }
 }
