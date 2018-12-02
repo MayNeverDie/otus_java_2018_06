@@ -1,4 +1,4 @@
-package com.dikanskiy;
+package com.dikanskiy.ATM;
 
 import com.dikanskiy.banknotes.Banknote;
 

@@ -1,8 +1,11 @@
 package com.dikanskiy;
 
+import com.dikanskiy.ATM.ATM;
+import com.dikanskiy.ATM.ATMImlp;
+import com.dikanskiy.ATM.Casette;
+import com.dikanskiy.ATMDepartment.ATMDepartment;
+import com.dikanskiy.ATMDepartment.ATMDepartmentImpl;
 import com.dikanskiy.banknotes.*;
-
-import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,14 +20,13 @@ public class Main {
         ATMHelper.fillCasette(FiveThousandCasette,FTB,2);
 
         ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette);
-        myAtm.viewBalance();
 
         myAtm.doBackup();
 
         ATMHelper.printCashValue(myAtm.getCash(15000));
-        myAtm.viewBalance();
 
-        myAtm.restore();
-        myAtm.viewBalance();
+        ATMDepartment myATMD = new ATMDepartmentImpl(myAtm);
+        myATMD.restore();
+        System.out.println(myATMD.getSum());
     }
 }

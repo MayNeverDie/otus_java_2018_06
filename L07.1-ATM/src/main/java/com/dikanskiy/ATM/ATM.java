@@ -1,4 +1,4 @@
-package com.dikanskiy;
+package com.dikanskiy.ATM;
 
 import com.dikanskiy.banknotes.Banknote;
 
@@ -9,7 +9,7 @@ public interface ATM {
 
     List getCash(long cashQuantity);
 
-    void viewBalance();
+    long getBalance();
 
     void doBackup();
 

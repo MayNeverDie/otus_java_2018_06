@@ -1,9 +1,8 @@
-package com.dikanskiy;
+package com.dikanskiy.ATM;
 
 import com.dikanskiy.banknotes.Banknote;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ATMImlp implements ATM {
     private List<Casette> casetteList;
@@ -68,7 +67,7 @@ public class ATMImlp implements ATM {
     }
 
 
-    private long getBalance() {
+    public long getBalance() {
         long cashBalance = 0;
         for (Casette casette : casetteList) {
             cashBalance += casette.getCount() * casette.getBanknoteValue();
@@ -76,12 +75,8 @@ public class ATMImlp implements ATM {
         return cashBalance;
     }
 
-    public void viewBalance() {
-        System.out.println(getBalance());
-    }
-
     public void doBackup(){
-        memento = new Memento();
+        memento = new Memento(casetteList);
     }
 
     public void restore(){
@@ -95,21 +90,21 @@ public class ATMImlp implements ATM {
                 '}';
     }
 
-    private class Memento {
-        private List memCasetteList;
-
-        public Memento() {
-            memCasetteList = new ArrayList(casetteList.size());
-            Iterator<Casette> iterator = casetteList.iterator();
-            while (iterator.hasNext()){
-                memCasetteList.add(iterator.next().clone());
-            }
-        }
-
-        public List getMemCasetteList() {
-            return memCasetteList;
-        }
-    }
 }
 
+class Memento {
+    private List memCasetteList;
+
+    public Memento(List casetteList) {
+        memCasetteList = new ArrayList(casetteList.size());
+        Iterator<Casette> iterator = casetteList.iterator();
+        while (iterator.hasNext()){
+            memCasetteList.add(iterator.next().clone());
+        }
+    }
+
+    public List getMemCasetteList() {
+        return memCasetteList;
+    }
+}
 
