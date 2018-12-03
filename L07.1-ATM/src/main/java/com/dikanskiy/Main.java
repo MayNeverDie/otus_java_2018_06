@@ -19,14 +19,15 @@ public class Main {
         ATMHelper.fillCasette(ThousandCasette,TB,5);
         ATMHelper.fillCasette(FiveThousandCasette,FTB,2);
 
-        ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette);
+        ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette); //setting up the ATM
+        myAtm.putCash(new ThousandBanknote()); //putting one banknote in
 
         myAtm.doBackup();
 
-        ATMHelper.printCashValue(myAtm.getCash(15000));
+        ATMHelper.printCashValue(myAtm.getCash(15000)); //withdrawing cash off ATM
 
-        ATMDepartment myATMD = new ATMDepartmentImpl(myAtm);
-        myATMD.restore();
-        System.out.println(myATMD.getSum());
+        ATMDepartment myATMD = new ATMDepartmentImpl(myAtm); //adding ATM to Department
+        myATMD.restore(); //restoring initial ATM state
+        System.out.println(myATMD.getSum()); //printing department cash sum
     }
 }
