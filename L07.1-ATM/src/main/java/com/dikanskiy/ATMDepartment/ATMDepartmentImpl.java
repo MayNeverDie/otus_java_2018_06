@@ -5,26 +5,25 @@ import com.dikanskiy.ATM.ATM;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ATMDepartmentImpl implements ATMDepartment {
-    private List<ATM> ATMList;
+    private List<ATM> atmList;
 
     public ATMDepartmentImpl(ATM... ATMS) {
-        this.ATMList = new ArrayList();
-        Collections.addAll(ATMList,ATMS);
+        this.atmList = new ArrayList();
+        Collections.addAll(atmList,ATMS);
     }
 
     @Override
     public void restore() {
-        ATMList.forEach(ATM::restore);
+        atmList.forEach(ATM::restore);
 
     }
 
     @Override
     public long getSum() {
-        //ATMList.forEach(ATM::getBalance);
-        long sum = ATMList.stream().mapToLong( o -> o.getBalance()).sum();
+        //atmList.forEach(ATM::getBalance);
+        long sum = atmList.stream().mapToLong(o -> o.getBalance()).sum();
         return sum;
     }
 }

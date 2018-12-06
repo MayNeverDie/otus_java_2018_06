@@ -1,5 +1,6 @@
 package com.dikanskiy.ATM;
 
+import com.dikanskiy.exceptions.ATMException;
 import com.dikanskiy.banknotes.Banknote;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Casette implements Comparable<Casette>, Cloneable {
-    private final List<Banknote> banknoteStack;
+    private final List<Banknote> banknotes;
     private List<Banknote> withdrawnBanknotes;
     private final int banknoteValue;
     private final int casetteCapacity = 2500;
@@ -23,25 +24,25 @@ public class Casette implements Comparable<Casette>, Cloneable {
 
     public Casette(Banknote banknote) {
         this.banknoteValue = banknote.getValue();
-        banknoteStack = new ArrayList<>(casetteCapacity);
+        banknotes = new ArrayList<>(casetteCapacity);
     }
 
-    public void put(Banknote banknote) {
+    public void put(Banknote banknote) throws ATMException {
 
-        if (banknoteStack.size() == casetteCapacity) {
-            throw new RuntimeException("Casette is full");
+        if (banknotes.size() == casetteCapacity) {
+            throw new ATMException("Casette is full");
         } else {
-            banknoteStack.add(banknote);
+            banknotes.add(banknote);
         }
         count++;
     }
 
-    public ArrayList<Banknote> get(int banknoteQuantity) {
+    public List<Banknote> get(int banknoteQuantity) {
         ArrayList<Banknote> withdrawnBanknotes = new ArrayList<>();
 
         for (int i = 0; i < banknoteQuantity; ) {
-            Banknote withdrawnBanknote = banknoteStack.iterator().next();
-            banknoteStack.remove(withdrawnBanknote);
+            Banknote withdrawnBanknote = banknotes.iterator().next();
+            banknotes.remove(withdrawnBanknote);
             withdrawnBanknotes.add(withdrawnBanknote);
             count--;
             i++;
@@ -54,12 +55,12 @@ public class Casette implements Comparable<Casette>, Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Casette casette = (Casette) o;
-        return Objects.equals(banknoteStack, casette.banknoteStack);
+        return Objects.equals(banknotes, casette.banknotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(banknoteStack);
+        return Objects.hash(banknotes);
     }
 
     public int getCount() {

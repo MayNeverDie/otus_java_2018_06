@@ -1,13 +1,14 @@
 package com.dikanskiy.ATM;
 
+import com.dikanskiy.exceptions.ATMException;
 import com.dikanskiy.banknotes.Banknote;
 
 import java.util.List;
 
 public interface ATM {
-    void putCash(Banknote... banknotes);
+    void putCash(Banknote... banknotes) throws ATMException;
 
-    List getCash(long cashQuantity);
+    List getCash(long cashQuantity) throws ATMException;
 
     long getBalance();
 

@@ -1,5 +1,6 @@
 package com.dikanskiy.ATM;
 
+import com.dikanskiy.exceptions.ATMException;
 import com.dikanskiy.banknotes.Banknote;
 
 import java.util.*;
@@ -14,37 +15,44 @@ public class ATMImlp implements ATM {
         casetteList.sort(Collections.reverseOrder());
     }
 
-    public void putCash(Banknote... banknotes) {
+    public void putCash(Banknote... banknotes) throws ATMException {
 
         for (Banknote banknote : banknotes) {
+            boolean casetteExists = false;
             for (Casette casette : casetteList) {
                 if (casette.getBanknoteValue() == banknote.getValue()) {
-                    casette.put(banknote);
+                    try {
+                        casette.put(banknote);
+                    } catch (ATMException e) {
+                        e.printStackTrace();
+                    }
+                    casetteExists = true;
                     break;
                 }
             }
+            if (!casetteExists) {throw new ATMException("No casette found for this value");}
         }
     }
 
-    public List getCash(long cashQuantity) {
-        ArrayList withdrawnBanknotes = new ArrayList();
+    public List getCash(long cashQuantity) throws ATMException {
+        List withdrawnBanknotes = new ArrayList();
         if (cashQuantity > 0) {
             if (getBalance() < cashQuantity) {
-                System.out.println("Not enough cash in ATM");
+                throw new ATMException("Not enough cash in ATM");
             } else {
                 if (cashQuantity % 100 == 0) {
                     withdrawnBanknotes = getCashFromCasette(cashQuantity);
                 } else {
-                    System.out.println("Enter valid cash quantity");
+                    throw new ATMException("Enter valid cash quantity");
                 }
             }
         } else {
-            System.out.println("Enter a non-zero cash quantity");
+            throw new ATMException("Enter a non-zero cash quantity");
         }
         return withdrawnBanknotes;
     }
 
-    private ArrayList getCashFromCasette(long cashQuantity) {
+    private List getCashFromCasette(long cashQuantity) {
         ArrayList withdrawnBanknotes = new ArrayList();
         for (Casette casette : casetteList) {
             int banknoteValue = casette.getBanknoteValue();

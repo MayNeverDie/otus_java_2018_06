@@ -6,25 +6,35 @@ import com.dikanskiy.ATM.Casette;
 import com.dikanskiy.ATMDepartment.ATMDepartment;
 import com.dikanskiy.ATMDepartment.ATMDepartmentImpl;
 import com.dikanskiy.banknotes.*;
+import com.dikanskiy.exceptions.ATMException;
 
 public class Main {
     public static void main(String[] args) {
 
-        Banknote TB = new ThousandBanknote();
-        Banknote FTB = new FiveThousandBanknote();
+        Banknote tb = new ThousandBanknote();
+        Banknote ftb = new FiveThousandBanknote();
 
-        Casette ThousandCasette = new Casette(TB);
-        Casette FiveThousandCasette = new Casette(FTB);
+        Casette thousandCasette = new Casette(tb);
+        Casette fiveThousandCasette = new Casette(ftb);
 
-        ATMHelper.fillCasette(ThousandCasette,TB,5);
-        ATMHelper.fillCasette(FiveThousandCasette,FTB,2);
+        ATMHelper.fillCasette(thousandCasette, tb, 5);
+        ATMHelper.fillCasette(fiveThousandCasette, ftb, 2);
 
-        ATM myAtm = new ATMImlp(ThousandCasette,FiveThousandCasette); //setting up the ATM
-        myAtm.putCash(new ThousandBanknote()); //putting one banknote in
+        ATM myAtm = new ATMImlp(thousandCasette, fiveThousandCasette); //setting up the ATM
+
+        try {
+            myAtm.putCash(new ThousandBanknote()); //putting one banknote in
+        } catch (ATMException e) {
+            e.printStackTrace();
+        }
 
         myAtm.doBackup();
 
-        ATMHelper.printCashValue(myAtm.getCash(15000)); //withdrawing cash off ATM
+        try {
+            ATMHelper.printCashValue(myAtm.getCash(15000)); //withdrawing cash off ATM
+        } catch (ATMException e) {
+            e.printStackTrace();
+        }
 
         ATMDepartment myATMD = new ATMDepartmentImpl(myAtm); //adding ATM to Department
         myATMD.restore(); //restoring initial ATM state
