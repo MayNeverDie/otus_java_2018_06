@@ -38,7 +38,7 @@ public class Casette implements Comparable<Casette>, Cloneable {
     }
 
     public List<Banknote> get(int banknoteQuantity) {
-        ArrayList<Banknote> withdrawnBanknotes = new ArrayList<>();
+        List<Banknote> withdrawnBanknotes = new ArrayList<>();
 
         for (int i = 0; i < banknoteQuantity; ) {
             Banknote withdrawnBanknote = banknotes.iterator().next();

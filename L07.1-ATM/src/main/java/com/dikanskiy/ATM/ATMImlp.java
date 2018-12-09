@@ -52,7 +52,7 @@ public class ATMImlp implements ATM {
         return withdrawnBanknotes;
     }
 
-    private List getCashFromCasette(long cashQuantity) {
+    private List<? extends Banknote> getCashFromCasette(long cashQuantity) {
         ArrayList withdrawnBanknotes = new ArrayList();
         for (Casette casette : casetteList) {
             int banknoteValue = casette.getBanknoteValue();
