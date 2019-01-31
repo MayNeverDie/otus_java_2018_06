@@ -8,4 +8,6 @@ public interface DBService extends AutoCloseable {
     void prepareTables() throws SQLException;
 
     void dropTables() throws SQLException;
+
+    void addUsers(String... names) throws SQLException;
 }
