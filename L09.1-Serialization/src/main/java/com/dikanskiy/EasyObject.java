@@ -3,6 +3,7 @@ package com.dikanskiy;
 import java.util.*;
 
 public class EasyObject {
+    private boolean[] boolArray;
     private boolean boolField = false;
     private byte byteField = 0;
     private short shortField = 1;
@@ -11,15 +12,16 @@ public class EasyObject {
     private long longField = 4L;
     private double doubleField = 5;
 
+
     private List listField;
-    private HashMap<Integer,String> mapField;
+    private HashMap<Integer, String> mapField;
     private String stringField = "str";
 
     public EasyObject() {
+        boolArray = new boolean[]{false, true};
         listField = new ArrayList();
         listField.add("list string one");
         listField.add("list string two");
-
         mapField = new HashMap();
         mapField.put(1, "map string one");
         mapField.put(2, "map string two");
