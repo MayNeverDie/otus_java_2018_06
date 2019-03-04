@@ -37,6 +37,7 @@ public class Main {
         }
 
         ATMDepartment myATMD = new ATMDepartmentImpl(myAtm); //adding ATM to Department
+        System.out.println(myATMD.getSum());
         myATMD.restore(); //restoring initial ATM state
         System.out.println(myATMD.getSum()); //printing department cash sum
     }

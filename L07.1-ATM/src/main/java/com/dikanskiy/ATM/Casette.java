@@ -11,7 +11,7 @@ public class Casette implements Comparable<Casette>, Cloneable {
     private final List<Banknote> banknotes;
     private List<Banknote> withdrawnBanknotes;
     private final int banknoteValue;
-    private final int casetteCapacity = 2500;
+    private static final int casetteCapacity = 2500;
     private int count = 0;
 
     @Override
@@ -28,9 +28,10 @@ public class Casette implements Comparable<Casette>, Cloneable {
     }
 
     public void put(Banknote banknote) throws ATMException {
-
         if (banknotes.size() == casetteCapacity) {
             throw new ATMException("Casette is full");
+        } else if(banknoteValue!=banknote.getValue()){
+            throw  new ATMException("Incorrect banknote value");
         } else {
             banknotes.add(banknote);
         }

@@ -18,7 +18,7 @@ public class ATMImlp implements ATM {
     public void putCash(Banknote... banknotes) throws ATMException {
 
         for (Banknote banknote : banknotes) {
-            boolean casetteExists = false;
+            /*boolean casetteExists = false;
             for (Casette casette : casetteList) {
                 if (casette.getBanknoteValue() == banknote.getValue()) {
                     try {
@@ -30,7 +30,10 @@ public class ATMImlp implements ATM {
                     break;
                 }
             }
-            if (!casetteExists) {throw new ATMException("No casette found for this value");}
+            if (!casetteExists) {throw new ATMException("No casette found for this value");}*/
+            Casette casette = getCasette(banknote);
+            if (casette == null) throw new ATMException("No casette found for banknote value: " + banknote.getValue());
+            casette.put(banknote);
         }
     }
 
@@ -50,6 +53,16 @@ public class ATMImlp implements ATM {
             throw new ATMException("Enter a non-zero cash quantity");
         }
         return withdrawnBanknotes;
+    }
+
+    public Casette getCasette(Banknote banknote){
+        Casette foundCasette = null;
+        for (Casette casette : casetteList) {
+            if (casette.getBanknoteValue() == banknote.getValue()) {
+                foundCasette = casette;
+            }
+        }
+        return foundCasette;
     }
 
     private List<? extends Banknote> getCashFromCasette(long cashQuantity) {
